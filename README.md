@@ -1,7 +1,7 @@
 nzbFamilyHub
 =================
 
-Description: nzbFamily Hub is NodeJS web application that currently performs the following duties:
+Description: nzbFamily Hub is a NodeJS web application that currently performs the following duties:
   - Presents a single page with links to various media aquiring applications (nzbDrone, nzbGet, CouchPotato, uTorrent)
   - Next 10 shows airing within the last 24 hours forward with download status.
   - Last 10 shows downloaded.
