@@ -1,0 +1,40 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+  color: #00b7ff;
+}
+.new-series-poster {
+  min-width: 138px;
+  min-height: 203px;
+  max-width: 138px;
+  max-height: 203px;
+  margin: 10px;
+}
+.overview-internal {
+  overflow: hidden;
+  height: 80px;
+}
+.series-title .labels {
+  margin-left: 10px;
+}
+.search-item .series-title .year {
+  font-style: italic;
+  color: #aaa;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+div {
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.428571429 !important;
+}
+.placeholder-image~.title {
+  opacity: 1;
+}

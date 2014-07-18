@@ -1,0 +1,96 @@
+extends layout
+
+block content
+	center
+		div.container
+			div.starter-template
+				#media-browser.page-header
+					h1 nzbFamily Hub
+				div.panel.panel-primary
+					div.panel-heading Search
+					div.panel-body
+						input.form-control(id="search",type="text",placeholder="Search")
+						div.add-series-screen.search-item.search-item-new
+							div.scroll.row(id="searchBody")
+				div.panel.panel-primary
+					div.panel-heading Players
+					div.panel-body
+						if config.Plex.enabled == true
+							a(target="_blank",href="#{config.Plex.protocol}://#{config.Plex.address}:#{config.Plex.port}#{config.Plex.path}")
+								image(src="/images/plex.jpg",width=400,height=125)
+							p Plex provides a method for viewing videos over multiple devices including your web browser!				
+				div.panel.panel-primary
+					div.panel-heading Schedulers
+					div.panel-body
+						if config.nzbDrone.enabled == true
+							a(target="_blank",href="#{config.nzbDrone.protocol}://#{config.nzbDrone.address}:#{config.nzbDrone.port}#{config.nzbDrone.path}")
+								image(src="/images/nzbdrone.png",width=100,height=100)
+							p TV Shows. nzbDrone allows you to schedule past or future TV shows for viewing.
+						if config.CouchPotato.enabled == true
+							a(target="_blank",href="#{config.CouchPotato.protocol}://#{config.CouchPotato.address}:#{config.CouchPotato.port}#{config.CouchPotato.path}")
+								image(src="/images/couchpotato.png",width=140,height=140)
+							p Movies. CouchPotato allows you to schedule new movies to download in the future, or download past movies.		
+				div.panel.panel-info
+					div.panel-heading Next 10 Shows Airing
+					div.panel-body
+						table.table.table-striped
+							thead
+								tr
+									th Series
+									th Episode
+									th Airing
+									th Downloaded
+							tbody
+								each episode, i in futureEpisodes
+									tr
+										th #{episode.series}
+										th #{episode.episode}
+										th #{episode.airDate}
+										th #{episode.downloaded}
+				div.panel.panel-info
+					div.panel-heading Last 10 Downloaded Shows
+					div.panel-body
+						table.table.table-striped
+							thead
+								tr
+									th Series
+									th Episode
+									th Aired
+									th Downloaded
+							tbody
+								each episode, i in recentlyDownloadedEpisodes
+									tr
+										th #{episode.series}
+										th #{episode.episode}
+										th #{episode.aired}
+										th #{episode.downloaded}
+				div.panel.panel-info
+					div.panel-heading Newest Movies
+					div.panel-body
+						table.table.table-striped
+							thead
+								tr
+									th Name
+									th Released
+									th Duration
+									th IMDB Score
+							tbody
+								each movie, i in movies
+									tr
+										th 
+											a(target="_blank",href="https://trakt.tv/movie/#{movie.titleSlug}") #{movie.name}
+										th #{movie.released}
+										th #{movie.runtime}
+										th
+											a(target="_blank",href="http://www.imdb.com/title/#{movie.imdb}") #{movie.imdbScore} (#{movie.imdbReviews})
+				div.panel.panel-warning
+					div.panel-heading Admin Tools
+					div.panel-body
+						if config.NZBGet.enabled == true
+							a(target="_blank",href="#{config.NZBGet.protocol}://#{config.NZBGet.address}:#{config.NZBGet.port}#{config.NZBGet.path}")
+								image(src="/images/nzbget.png",width=140,height=140)
+							p NZBGet is the central downloader for usenet files.
+						if config.uTorrent.enabled == true
+							a(target="_blank",href="#{config.uTorrent.protocol}://#{config.uTorrent.address}:#{config.uTorrent.port}#{config.uTorrent.path}")
+								image(src="/images/utorrent.png",width=140,height=140)
+							p uTorrent is the central downloader for torrent files.
