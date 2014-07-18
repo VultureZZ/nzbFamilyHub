@@ -19,6 +19,7 @@ Instllation:
   - Install NodeJS
   - Download the contents of this repository or clone it.
   - Execute "npm install" within the directory
+  - Edit config.js with a text editor, the file must be fully populated or you will have errors.
   - Execute "npm start" to start the web application.
 
 Persistance: Run "npm install -g forever" or "npm install -g forever-win" for windows. Then execute "forever start app.js" from the program directory.
