@@ -97,11 +97,8 @@ $( document ).ready(function() {
 
               var method = $('#' + $(this).attr("id") + "Selector").val();
               var thisElement = $(this);
-              console.log(seriesArray[$(this).attr("id")], $(this).attr("id"));
 
               $.get( "/calls/queue/update-series", {method: method, id: seriesArray[$(this).attr("id")].id}, function( data ){
-                
-                data = (JSON.parse(data));
 
                 if (data.success) {
                   thisElement.html('Pending');
@@ -145,7 +142,7 @@ $( document ).ready(function() {
 
                 $.get( "/calls/queue/series", {seriesType: seriesType, method: method, model: seriesArray[$(this).attr("id")]}, function( data ){
                   
-                  data = (JSON.parse(data));
+                  data = JSON.parse(data);
                   
                   if (data.id) {
                     thisElement.html('Pending');

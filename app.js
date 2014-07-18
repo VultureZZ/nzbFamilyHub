@@ -41,7 +41,6 @@ app.get('/calls/queue/update-series', routes.updateSeries);
 
 
 function nzbDroneAPICall (path, callback) {
-  console.log('Making Drone request', path);
   var options = {
     host: conf.public.nzbDrone.address,
     port: conf.public.nzbDrone.port,
@@ -66,7 +65,6 @@ function nzbDroneAPICall (path, callback) {
 }
 
 function couchPotatoAPICall (path, callback) {
-  console.log('Making CP request', path);
   var options = {
     host: conf.public.CouchPotato.address,
     port: conf.public.CouchPotato.port,
@@ -122,7 +120,6 @@ function addMovie (imdbId, callback) {
   var addQuery = '/api/' + conf.private.CouchPotato.apiKey + '/movie.add?identifier=' + imdbId;
 
   couchPotatoAPICall(addQuery, function (err, data) {
-    console.log('All done', err, data);
     if (err) {callback(err);}
     callback(null, data);
   });
@@ -303,11 +300,13 @@ function searchForMedia (query, callback) {
   async.parallel([
       function(callback){
         // Make CP call
-        if (conf.private.CouchPotato.enabled) {
+        if (conf.public.CouchPotato.enabled) {
           searchCouchPotato(query, function (err, movies) {
             callback(null, movies);
           });
-        }       
+        } else {
+          callback(null);
+        }    
       },
       function(callback){
         if (conf.public.nzbDrone.enabled) {
@@ -327,11 +326,12 @@ function searchForMedia (query, callback) {
               callback(null, results);
             });
           });
-        }
+        } else {
+          callback(null);
+        }    
       }
   ], function (err, results){
     callback(null, results);
-
   });
 }
 
