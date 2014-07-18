@@ -15,7 +15,7 @@ var express = require('express')
 var app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || conf.port);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -31,13 +31,16 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
+var auth = express.basicAuth( conf.login, conf.password);
 
-app.get('/calls/search', routes.search);
+app.get('/', auth, routes.index);
 
-app.get('/calls/queue/movie', routes.addMovie);
-app.get('/calls/queue/series', routes.addSeries);
-app.get('/calls/queue/update-series', routes.updateSeries);
+app.get('/calls/search', auth, routes.search);
+
+app.get('/calls/queue/movie', auth, routes.addMovie);
+app.get('/calls/queue/series', auth, routes.addSeries);
+app.get('/calls/queue/update-series', auth, routes.updateSeries);
+
 
 
 function nzbDroneAPICall (path, callback) {
@@ -464,6 +467,7 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
+// Move application to HTTPS
 // To-do: Add a "get more" and "complete season" and "everything" to monitored series
 // To-do: Add additional meta data to presentation of movies and series
 // To-do: Quality profile should be set by settings on nzbdrone

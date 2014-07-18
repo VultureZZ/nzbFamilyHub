@@ -46,5 +46,8 @@ module.exports = {
     'CouchPotato': {
       'apiKey': 'CP_APIKEY'
     }
-  }
+  },
+  'port': 3000,
+  'login': 'admin',
+  'password': 'password'
 }
