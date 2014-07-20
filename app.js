@@ -217,8 +217,8 @@ function getSeriesEpisodes (seriesId, callback) {
 module.exports.getSeriesEpisodes = getSeriesEpisodes;
 
 function getDownloadedMovies (callback) {
-  var historyQuery = '/api/' + conf.private.CouchPotato.apiKey + '/media.list?status=done,ignored';
-
+  var historyQuery = '/api/' + conf.private.CouchPotato.apiKey + '/media.list?limit_offset=20&status=done,ignored';
+  
   couchPotatoAPICall(historyQuery, function (err, data) {
     if (err) {callback(err);}
     var movies = _.map( data.movies, function( movie ){
