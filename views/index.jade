@@ -30,59 +30,62 @@ block content
 							a(target="_blank",href="#{config.CouchPotato.protocol}://#{config.CouchPotato.address}:#{config.CouchPotato.port}#{config.CouchPotato.path}")
 								image(src="/images/couchpotato.png",width=140,height=140)
 							p Movies. CouchPotato allows you to schedule new movies to download in the future, or download past movies.		
-				div.panel.panel-info
-					div.panel-heading Next 10 Shows Airing
-					div.panel-body
-						table.table.table-striped
-							thead
-								tr
-									th Series
-									th Episode
-									th Airing
-									th Downloaded
-							tbody
-								each episode, i in futureEpisodes
+				if futureEpisodes.length
+					div.panel.panel-info
+						div.panel-heading Next 10 Shows Airing
+						div.panel-body
+							table.table.table-striped
+								thead
 									tr
-										th #{episode.series}
-										th #{episode.episode}
-										th #{episode.airDate}
-										th #{episode.downloaded}
-				div.panel.panel-info
-					div.panel-heading Last 10 Downloaded Shows
-					div.panel-body
-						table.table.table-striped
-							thead
-								tr
-									th Series
-									th Episode
-									th Aired
-									th Downloaded
-							tbody
-								each episode, i in recentlyDownloadedEpisodes
+										th Series
+										th Episode
+										th Airing
+										th Downloaded
+								tbody
+									each episode, i in futureEpisodes
+										tr
+											th #{episode.series}
+											th #{episode.episode}
+											th #{episode.airDate}
+											th #{episode.downloaded}
+				if recentlyDownloadedEpisodes.length
+					div.panel.panel-info
+						div.panel-heading Last 10 Downloaded Shows
+						div.panel-body
+							table.table.table-striped
+								thead
 									tr
-										th #{episode.series}
-										th #{episode.episode}
-										th #{episode.aired}
-										th #{episode.downloaded}
-				div.panel.panel-info
-					div.panel-heading Newest Movies
-					div.panel-body
-						table.table.table-striped
-							thead
-								tr
-									th Name
-									th Released
-									th Duration
-									th IMDB Score
-							tbody
-								each movie, i in movies
+										th Series
+										th Episode
+										th Aired
+										th Downloaded
+								tbody
+									each episode, i in recentlyDownloadedEpisodes
+										tr
+											th #{episode.series}
+											th #{episode.episode}
+											th #{episode.aired}
+											th #{episode.downloaded}
+				if movies.length
+					div.panel.panel-info
+						div.panel-heading Newest Movies
+						div.panel-body
+							table.table.table-striped
+								thead
 									tr
-										th 
-											a(target="_blank",href="https://trakt.tv/movie/#{movie.titleSlug}") #{movie.name}
-										th #{movie.released}
-										th #{movie.runtime}
-										th
-											a(target="_blank",href="http://www.imdb.com/title/#{movie.imdb}") #{movie.imdbScore} (#{movie.imdbReviews})
+										th Name
+										th Released
+										th Duration
+										th IMDB Score
+								tbody
+									each movie, i in movies
+										tr
+											th 
+												a(target="_blank",href="https://trakt.tv/movie/#{movie.titleSlug}") #{movie.name}
+											th #{movie.released}
+											th #{movie.runtime}
+											th
+												a(target="_blank",href="http://www.imdb.com/title/#{movie.imdb}") #{movie.imdbScore} (#{movie.imdbReviews})
 				div.panel.panel-warning
 					div.panel-heading Admin Tools
 					div.panel-body

@@ -11,11 +11,21 @@ $( document ).ready(function() {
           $('#search').attr('disabled',true);
 
           $.get( "/calls/search", {search: $("#search").val()}, function( data ){
-            var series = data[0].reverse();
-            var movies = data[1].reverse();
+
+            if (data[0] && data[0].length > 0) { 
+              var series = data[0].reverse();
+            } else {
+              var series = [];
+            }
+
+            if (data[1] && data[1].length > 0) { 
+              var movies = data[1].reverse();
+            } else {
+              var movies = [];
+            }
 
             _.each(series, function(result) {
-
+              console.log('start iterate', series);
               if (result.series) {
                 var tracktLink = result.series.toLowerCase().replace(/ /g, '-').replace(/[^a-zA-Z0-9-]/g, '');
 

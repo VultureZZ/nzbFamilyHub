@@ -29,7 +29,7 @@ module.exports = {
       'path': '',
       'port': '5050',
       'protocol':  'http',
-      'enabled': true,
+      'enabled': true
     },
     'uTorrent': {
       'address': 'HOSTNAME',

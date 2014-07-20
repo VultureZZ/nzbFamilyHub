@@ -10,22 +10,34 @@ var moment = require('moment');
 var _ = require('underscore');
 
 exports.index = function(req, res){
-
+  console.log()
   async.parallel([
       function(callback){
-        app.getDownloadedMovies ( function (err, movies) {
-          callback(err, movies);
-        });
+        if (conf.public.CouchPotato.enabled) {
+          app.getDownloadedMovies ( function (err, movies) {
+            callback(err, movies);
+          });
+        } else {
+          callback(null, []);
+        }
       },
       function(callback){
-        app.getShowHistory ( function (err, downloadedShows) {
-          callback(err, downloadedShows);
-        });
+        if (conf.public.nzbDrone.enabled) {
+          app.getShowHistory ( function (err, downloadedShows) {
+            callback(err, downloadedShows);
+          });
+        } else {
+          callback(null, []);
+        }
       },
       function(callback){
-        app.getFutureShows ( function (err, futureShows) {
-          callback(err, futureShows);
-        });
+        if (conf.public.nzbDrone.enabled) {
+          app.getFutureShows ( function (err, futureShows) {
+            callback(err, futureShows);
+          });
+        } else {
+          callback(null, []);
+        }
       }
   ], function (err, results){
     res.render('index', {config: conf.public, recentlyDownloadedEpisodes: results[1], futureEpisodes: results[2], movies: results[0]});
