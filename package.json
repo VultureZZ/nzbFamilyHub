@@ -1,6 +1,6 @@
 {
   "name": "application-name",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "node app"
@@ -14,6 +14,10 @@
     "jade": "*",
     "stylus": "*",
     "async": "*",
+    "node-rest-client": "*",
+    "ftps": "*",
+    "chokidar": "*",
+    "list-directory-contents": "*",
     "node-rest-client": "*"
   }
 }

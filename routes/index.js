@@ -1,20 +1,16 @@
-
-/*
- * GET home page.
- */
-
-var conf = require("../config");
-var app = require("../app");
-var async = require('async');
-var moment = require('moment');
-var _ = require('underscore');
+var conf = require("../config")
+  , app = require("../app")
+  , moment = require('moment')
+  , apiCP = require('../lib/apiCP')
+  , apiDrone = require('../lib/apiDrone')
+  , _ = require('underscore')
+  , async = require('async');
 
 exports.index = function(req, res){
-  console.log()
   async.parallel([
       function(callback){
         if (conf.public.CouchPotato.enabled) {
-          app.getDownloadedMovies ( function (err, movies) {
+          apiCP.getDownloadedMovies ( function (err, movies) {
             callback(err, movies);
           });
         } else {
@@ -23,7 +19,7 @@ exports.index = function(req, res){
       },
       function(callback){
         if (conf.public.nzbDrone.enabled) {
-          app.getShowHistory ( function (err, downloadedShows) {
+          apiDrone.getShowHistory ( function (err, downloadedShows) {
             callback(err, downloadedShows);
           });
         } else {
@@ -32,7 +28,7 @@ exports.index = function(req, res){
       },
       function(callback){
         if (conf.public.nzbDrone.enabled) {
-          app.getFutureShows ( function (err, futureShows) {
+          apiDrone.getFutureShows ( function (err, futureShows) {
             callback(err, futureShows);
           });
         } else {
@@ -51,10 +47,11 @@ exports.search = function(req, res){
 };
 
 exports.addMovie = function(req, res){
-  app.addMovie(req.query.imdb, function(err, results) {
+  apiCP.addMovie(req.query.imdb, function(err, results) {
     res.send(results);
   });
 };
+
 
 exports.addSeries = function(req, res){
   var series = req.query.model;
@@ -78,14 +75,14 @@ exports.addSeries = function(req, res){
       // Monitor recent season only      
       seasons[0].monitored = true;
 
-      app.addSeries({seriesType: req.query.seriesType, model: series.model, seasons: seasons}, function(err, series) {
+      apiDrone.addSeries({seriesType: req.query.seriesType, model: series.model, seasons: seasons}, function(err, series) {
         // Search for latest episode
         
         res.send(series);
         series = JSON.parse(series);
 
         setTimeout( function () {
-          app.getSeriesEpisodes(series.id, function (err, episodes) {
+          apiDrone.getSeriesEpisodes(series.id, function (err, episodes) {
 
             var seNo = 0;
             var epNo = 0;
@@ -100,7 +97,7 @@ exports.addSeries = function(req, res){
             });
 
             if (primaryEpisode && !primaryEpisode.hasFile) {
-              app.searchSeriesEpisodes([primaryEpisode.id], function (err, data) {
+              apiDrone.searchSeriesEpisodes([primaryEpisode.id], function (err, data) {
               });
             }
           });
@@ -112,7 +109,7 @@ exports.addSeries = function(req, res){
       // Monitor recent season only    
       seasons[0].monitored = true;
 
-      app.addSeries({seriesType: req.query.seriesType, model: series.model, seasons: seasons}, function(err, series) {
+      apiDrone.addSeries({seriesType: req.query.seriesType, model: series.model, seasons: seasons}, function(err, series) {
         
         // Search for all episodes in season
         
@@ -120,7 +117,7 @@ exports.addSeries = function(req, res){
         series = JSON.parse(series);
 
         setTimeout( function () {
-          app.getSeriesEpisodes(series.id, function (err, episodes) {
+          apiDrone.getSeriesEpisodes(series.id, function (err, episodes) {
 
             var seNo = 0;
             var epNo = 0;
@@ -139,7 +136,7 @@ exports.addSeries = function(req, res){
             });
 
             if (episodeIds.length > 0) {
-              app.searchSeriesEpisodes(episodeIds, function (err, data) {
+              apiDrone.searchSeriesEpisodes(episodeIds, function (err, data) {
 
               });
             }
@@ -152,7 +149,7 @@ exports.addSeries = function(req, res){
       // Monitor recent season only and pilot   
       seasons[0].monitored = true;
 
-      app.addSeries({seriesType: req.query.seriesType, model: series.model, seasons: seasons}, function(err, series) {
+      apiDrone.addSeries({seriesType: req.query.seriesType, model: series.model, seasons: seasons}, function(err, series) {
         
       // Search for pilot episode + 2
         
@@ -160,7 +157,7 @@ exports.addSeries = function(req, res){
         series = JSON.parse(series);
 
         setTimeout( function () {
-          app.getSeriesEpisodes(series.id, function (err, episodes) {
+          apiDrone.getSeriesEpisodes(series.id, function (err, episodes) {
 
             var episodeIds = [];
 
@@ -171,7 +168,7 @@ exports.addSeries = function(req, res){
             });
 
             if (episodeIds.length > 0) {
-              app.searchSeriesEpisodes(episodeIds, function (err, data) {
+              apiDrone.searchSeriesEpisodes(episodeIds, function (err, data) {
                 
               });
             }
@@ -184,7 +181,7 @@ exports.addSeries = function(req, res){
       // Monitor current and recent seasons
       seasons[0].monitored = true;
 
-      app.addSeries({seriesType: req.query.seriesType, model: series.model, seasons: seasons}, function(err, series) {
+      apiDrone.addSeries({seriesType: req.query.seriesType, model: series.model, seasons: seasons}, function(err, series) {
         
       // Search for first season 
         
@@ -192,7 +189,7 @@ exports.addSeries = function(req, res){
         series = JSON.parse(series);
 
         setTimeout( function () {
-          app.getSeriesEpisodes(series.id, function (err, episodes) {
+          apiDrone.getSeriesEpisodes(series.id, function (err, episodes) {
 
             var episodeIds = [];
             
@@ -203,7 +200,7 @@ exports.addSeries = function(req, res){
             });
 
             if (episodeIds.length > 0) {
-              app.searchSeriesEpisodes(episodeIds, function (err, data) {
+              apiDrone.searchSeriesEpisodes(episodeIds, function (err, data) {
                 
               });
             }
@@ -217,7 +214,7 @@ exports.addSeries = function(req, res){
       // Monitor everything
       seasons[0].monitored = true;
 
-      app.addSeries({seriesType: req.query.seriesType, model: series.model, seasons: seasons}, function(err, series) {
+      apiDrone.addSeries({seriesType: req.query.seriesType, model: series.model, seasons: seasons}, function(err, series) {
         
       // Search for everything
         
@@ -225,7 +222,7 @@ exports.addSeries = function(req, res){
         series = JSON.parse(series);
 
         setTimeout( function () {
-          app.getSeriesEpisodes(series.id, function (err, episodes) {
+          apiDrone.getSeriesEpisodes(series.id, function (err, episodes) {
 
             var episodeIds = [];
 
@@ -236,7 +233,7 @@ exports.addSeries = function(req, res){
             });
 
             if (episodeIds.length > 0) {
-              app.searchSeriesEpisodes(episodeIds, function (err, data) {
+              apiDrone.searchSeriesEpisodes(episodeIds, function (err, data) {
                 
               });
             }
@@ -254,7 +251,7 @@ exports.updateSeries = function(req, res){
 
   switch ( req.query.method ) {
     case "getMore":  
-      app.getSeriesEpisodes(id, function (err, episodes) {
+      apiDrone.getSeriesEpisodes(id, function (err, episodes) {
 
         var seNo = 1;
         var maxEps = 3;
@@ -270,7 +267,7 @@ exports.updateSeries = function(req, res){
         });
 
         if (downloadEpisodes.length > 0) {
-          app.searchSeriesEpisodes(downloadEpisodes, function (err, data) {
+          apiDrone.searchSeriesEpisodes(downloadEpisodes, function (err, data) {
             res.send({success: true});
           });
         } else {
@@ -279,7 +276,7 @@ exports.updateSeries = function(req, res){
       });
       break;
     case "getAll":
-      app.getSeriesEpisodes(id, function (err, episodes) {
+      apiDrone.getSeriesEpisodes(id, function (err, episodes) {
 
         var seNo = 1;
         var maxEps = 3;
@@ -292,7 +289,7 @@ exports.updateSeries = function(req, res){
         });
 
         if (downloadEpisodes.length > 0) {
-          app.searchSeriesEpisodes(downloadEpisodes, function (err, data) {
+          apiDrone.searchSeriesEpisodes(downloadEpisodes, function (err, data) {
             res.send({success: true});
           });
         } else {
@@ -301,7 +298,7 @@ exports.updateSeries = function(req, res){
       });
       break;
     case "completeSeason":
-      app.getSeriesEpisodes(id, function (err, episodes) {
+      apiDrone.getSeriesEpisodes(id, function (err, episodes) {
 
         var seNo;
         var maxEps = 3;
@@ -319,7 +316,7 @@ exports.updateSeries = function(req, res){
         });
 
         if (downloadEpisodes.length > 0) {
-          app.searchSeriesEpisodes(downloadEpisodes, function (err, data) {
+          apiDrone.searchSeriesEpisodes(downloadEpisodes, function (err, data) {
             res.send({success: true});
           });
         } else {
@@ -329,11 +326,3 @@ exports.updateSeries = function(req, res){
       break;
   }
 };
-
-function compareSeasons(a,b) {
-  if (a.seasonNumber < b.seasonNumber)
-     return -1;
-  if (a.seasonNumber > b.seasonNumber)
-    return 1;
-  return 0;
-}
