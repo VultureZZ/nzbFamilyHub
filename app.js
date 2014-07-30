@@ -31,10 +31,12 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-var auth = null;
+var auth = express.basicAuth( 'admin', 'password');
 
 if (conf.login && conf.password) {
   var auth = express.basicAuth( conf.login, conf.password);
+} else {
+  console.warn('WARNING: No admin login and password set in config.js defaulting to admin/password');
 }
 
 app.get('/', auth, routes.index);

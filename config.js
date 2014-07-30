@@ -12,7 +12,7 @@ module.exports = {
       'path': '',
       'port': '8989',
       'protocol':  'http', // Only HTTP supported right now
-      'enabled': true,
+      'enabled': false,
       'clientProfile': 5, // Starting at 1 count out your profiles (for now)
       'downloadPath': 'c:\\media\\tv',
       'downloadPathAnime': 'c:\\media\\anime'
@@ -29,7 +29,7 @@ module.exports = {
       'path': '',
       'port': '5050',
       'protocol':  'http',
-      'enabled': true
+      'enabled': false
     },
     'uTorrent': {
       'address': '',
@@ -59,13 +59,13 @@ module.exports = {
       'fileWait': 60000, // How long to wait after a change has been detected to transfer the filee. While a file is being written to it should not transfer, but do not set this less than 5 seconds.
       'fileMinSize': 500000, // Minimum files size to initiate a trasnfer. Do not set less than 1 or it will cause a loop.
       'debug': true, // Enable debugging as this is experamental
-      'enabled': true 
+      'enabled': false 
     }
   },
   'port': 3000,
   'login': 'admin',
   'password': '',
-  'protocol': 'https',
+  'protocol': 'http',
   'ssl': {
     'key': 'domain.key',
     'crt': 'domain.cert'
