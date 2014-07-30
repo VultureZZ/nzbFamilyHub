@@ -116,4 +116,5 @@ if (conf.private.sync.enabled) {
 // To-do: Allow users to download additional episodes for a series.
 // To-do: Allow users to mark a download as bad
 // To-do: Clean interface
+
 // To-do: Archive old tv series/movies and allow them to be "spooled" down to a server
