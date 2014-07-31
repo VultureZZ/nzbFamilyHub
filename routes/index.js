@@ -326,3 +326,11 @@ exports.updateSeries = function(req, res){
       break;
   }
 };
+
+function compareSeasons(a,b) {
+  if (a.seasonNumber < b.seasonNumber)
+     return -1;
+  if (a.seasonNumber > b.seasonNumber)
+    return 1;
+  return 0;
+};
