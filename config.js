@@ -59,7 +59,8 @@ module.exports = {
       'fileWait': 60000, // How long to wait after a change has been detected to transfer the filee. While a file is being written to it should not transfer, but do not set this less than 5 seconds.
       'fileMinSize': 500000, // Minimum files size to initiate a trasnfer. Do not set less than 1 or it will cause a loop.
       'debug': true, // Enable debugging as this is experamental
-      'enabled': false 
+      'enabled': false,
+      'tmpDir': '/tmp' // Change this to a directory within your own home directory to protect the scripts, this removes the ability for another user to see your FTP credentials
     }
   },
   'port': 3000,

@@ -15,7 +15,7 @@
     "stylus": "*",
     "async": "*",
     "node-rest-client": "*",
-    "ftps": "*",
+    "ftps": "git+https://github.com/VultureZZ/node-ftps.git#master",
     "chokidar": "*",
     "list-directory-contents": "*",
     "node-rest-client": "*"
