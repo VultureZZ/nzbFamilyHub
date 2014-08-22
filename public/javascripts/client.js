@@ -144,12 +144,6 @@ $( document ).ready(function() {
                 var seriesType = $('.seriesType' + $(this).attr("id")).val();
                 var thisElement = $(this);
 
-                var seriesType = "standard";
-
-                if (seriesType) {
-                  seriesType = "anime";
-                }
-
                 $.get( "/calls/queue/series", {seriesType: seriesType, method: method, model: seriesArray[$(this).attr("id")]}, function( data ){
                   
                   data = JSON.parse(data);

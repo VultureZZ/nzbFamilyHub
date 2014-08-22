@@ -36,7 +36,7 @@ module.exports = {
       'path': '/gui',
       'port': '8000',
       'protocol':  'http',
-      'enabled': true
+        'enabled': true
     }
   },
   private: {    
@@ -52,7 +52,7 @@ module.exports = {
       'password': '',
       'port': '22',
       'protocol': 'sftp', // values : 'ftp', 'sftp', 'ftps' - blank is ftp
-      'maxTransfers': 1, // maximum number of simultaneous transfers to this host.
+      'maxTransfers': 1, // maximum number of simultaneous transfers to this host. Keep this at 1 for now
       'fileStructure': '/media/', // must contain the ending slash
       'syncFolders': ['/tv', '/anime', '/movies'],
       'deleteAfter': true, // Delete files from the server running this app after transferring to this server?
