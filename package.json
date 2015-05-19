@@ -1,9 +1,9 @@
 {
-  "name": "application-name",
-  "version": "0.1.0",
+  "name": "nzbFamillyHub",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
-    "start": "node app"
+    "start": "node app.js"
   },
   "dependencies": {
     "express": "3.x",
@@ -15,9 +15,8 @@
     "stylus": "*",
     "async": "*",
     "node-rest-client": "*",
-    "ftps": "git+https://github.com/VultureZZ/node-ftps.git#master",
-    "chokidar": "*",
+    "ftps": "*",
     "list-directory-contents": "*",
-    "node-rest-client": "*"
+    "watch": "*"
   }
 }
